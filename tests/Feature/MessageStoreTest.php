@@ -15,18 +15,31 @@ class MessageStoreTest extends TestCase
     #[Test]
     public function user_can_create_messages(): void
     {
-        $response = $this->post('/message', [
+        $messageData = [
             'title' => 'Mi primer mensaje',
             'content' => 'Este es el contenido del mensaje',
             'url' => 'https://example.com'
-        ]);
+        ];
 
-        $this->assertDatabaseHas('messages', [
-            'title' => 'Mi primer mensaje',
-            'content' => 'Este es el contenido del mensaje',
-            'url' => 'https://example.com'
-        ]);
+        $response = $this->post('/message', $messageData);
 
         $response->assertStatus(200);
+        $this->assertDatabaseHas('messages', $messageData);
+
+        $response = $this->get('/');
+        $response
+            ->assertStatus(200)
+            ->assertSee($messageData['title']);
+    }
+
+    #[Test]
+    public function only_url_is_optional_when_store_messages(): void
+    {
+        $response = $this->post('/message', []);
+
+        $response
+            ->assertRedirect()
+            ->assertValid(['url'])
+            ->assertInvalid(['title', 'content']);
     }
 }

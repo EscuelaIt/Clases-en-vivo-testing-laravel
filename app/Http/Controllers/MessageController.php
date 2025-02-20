@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 class MessageController extends Controller
 {
     public function store(Request $request) {
-        Message::create($request->all());
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'url' => 'nullable|url|max:255',
+        ]);
+
+        Message::create($validated);
     }
 }
