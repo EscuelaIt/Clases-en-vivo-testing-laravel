@@ -15,6 +15,8 @@ class MessageController extends Controller
             'url' => 'nullable|url|max:255',
         ]);
 
-        Message::create($validated);
+        $user = $request->user();
+        $user->messages()->create($validated);
+        return redirect('/');
     }
 }
