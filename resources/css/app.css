@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a {
+    @apply text-indigo-600 hover:text-indigo-800 transition-colors duration-200;
+}

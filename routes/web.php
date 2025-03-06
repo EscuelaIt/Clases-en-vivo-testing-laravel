@@ -20,3 +20,4 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::post('/message', [MessageController::class, 'store'])->middleware(['auth', 'verified']);
+Route::get('/message', [MessageController::class, 'create'])->middleware(['auth', 'verified']);

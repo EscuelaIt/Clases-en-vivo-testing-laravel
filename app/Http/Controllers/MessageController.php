@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+
+    public function create() {
+        return view('create-message');
+    }
+
     public function store(Request $request) {
 
         $validated = $request->validate([
